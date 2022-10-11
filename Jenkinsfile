@@ -1,20 +1,41 @@
 pipeline {
     agent any
+    tools {
+        maven 'apache maven 3.6.3'
+        jdk 'JDK 8'
+    }
     
     stages {
+        stage ('clean') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
         stage ('build') {
             steps {
-                sh 'echo Compile'
+                sh 'mvn compile'
             }
         }
-        stage ('test') {
+        stage('Short Tests') {
             steps {
-                sh 'echo Test'
+                sh 'mvn -Dtest=CalculatorTest test'
             }
         }
-        stage('deploy') {
+        stage('Long Tests') {
             steps {
-                sh 'echo Deploy'
+                sh 'mvn -Dtest=CalculatorTestThorough test'
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml'
+                }
+            }
+        }
+        stage('Package') {
+            steps {
+                sh 'mvn package'
+                archiveArtifacts artifacts: 'src/**/*.java'
+                archiveArtifacts artifacts: 'target/*.jar'
             }
         }
     }
