@@ -4,8 +4,6 @@ import java.util.Random;
 
 class Calculator {
 
-    Randomly break everything
-
     Calculator(){
 
     }
