@@ -2,14 +2,17 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        boolean run = true;
+        while (run) {
             String[] tokens = scanner.nextLine().split(" ");
             String command = tokens[0];
-
-            int num1 = Integer.parseInt(tokens[1]);
+            int num1 = 0;
             int num2 = 0;
+
+            if (tokens.length > 1) {
+                num1 = Integer.parseInt(tokens[1]);
+            }
             if (tokens.length > 2) {
                 num2 = Integer.parseInt(tokens[2]);
             }
@@ -34,13 +37,14 @@ public class Main {
                 case "intToBinaryNumber":
                     System.out.println(calc.intToBinaryNumber(num1));
                     break;
+                case "q":
+                    run = false;
+                    break;
                 default:
                     break;
             }
-            scanner.close();
         }
-       
-       
-        
+        scanner.close();
+    
     }
 }
